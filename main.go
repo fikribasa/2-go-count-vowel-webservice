@@ -17,23 +17,42 @@ func countHandler(response http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	myString := vars["userString"] //get parameter then assign to mystring
 	fmt.Println(myString)
-	t := 0
-	c := 0
+	
+	vowel := 0
+	conso := 0
+	// var savedWord rune
+	var filteredString []rune
+	runes := []rune(myString)
 
+	// remove duplicate word
+	for i := 0; i < len(runes); i++ {
+		// Scan slice for a previous element of the same value.
+		exists := false
+		for v := 0; v < i; v++ {
+			if runes[v] == runes[i] {
+				exists = true
+				break
+			}
+		}
+		// If no previous element exists, append this one.
+		if !exists {
+			filteredString = append(filteredString, runes[i])
+		}
+	}
 
-	for _, value := range myString {
+	for _, value := range filteredString {
 		switch value {
 		case 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U':
-			t++
+			vowel++
 		default :
-			c++
+			conso++
 		}
 		
 	}
 	response.WriteHeader(http.StatusOK)
-	fmt.Printf("/n %d Vowels, %d Consonant", t,c)
+	fmt.Printf("%d Vowels, %d Consonant", vowel,conso)
 	response.Header().Set("Content-Type", "application/json")
-	fmt.Fprintf(response, "%d Vowels, %d Consonant", t,c)
+	fmt.Fprintf(response, "%d Vowels, %d Consonant", vowel,conso)
 }
 
 
