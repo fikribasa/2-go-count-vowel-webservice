@@ -50,7 +50,7 @@ func countHandler(response http.ResponseWriter, request *http.Request) {
 		
 	}
 	response.WriteHeader(http.StatusOK)
-	fmt.Printf("%d Vowels, %d Consonant", vowel,conso)
+	fmt.Printf("%d Vowels, %d Consonant \n", vowel,conso)
 	response.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(response, "%d Vowels, %d Consonant", vowel,conso)
 }
